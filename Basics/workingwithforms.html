@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="forms">
+  <head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+	<style>
+		.strike { text-decoration: line-through;}
+		.ng-dirty.ng-invalid{ border-color: red;}
+		.ng-dirty.ng-valid{border-color:green;}
+	</style>
+	<script>
+		<!-- Angular code goes here -->
+		var app = angular.module('forms', []);
+		
+		app.controller('todoController', function() {
+			this.todoItem = {};
+			this.todoList = [];
+			
+			this.addToDo = function() {
+				// set default value
+				this.todoItem.done = false;
+				// add to the list
+				this.todoList.push(this.todoItem);
+				// clear the object to allow for multiple
+				this.todoItem = {};
+				
+			};
+			
+		});
+	</script>
+  </head>
+
+  <body ng-controller="todoController as todoCtrl">
+    <div class="container">
+		<h2>To Do List</h2>
+		<ul>
+			<li ng-repeat="item in todoCtrl.todoList"><span ng-class="{strike:item.done}">{{item.name}}</span><input type="checkbox" ng-model="item.done"></li>
+		</ul>
+		
+		<form name="todoForm" ng-submit="todoForm.$valid && todoCtrl.addToDo()" novalidate>
+			<input type="text" placeholder="enter a name" ng-model="todoCtrl.todoItem.name" required></input>
+			<input type="submit" value="save"></input>
+		</form>
+	</div>
+  </body>
+</html>

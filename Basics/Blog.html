@@ -70,13 +70,13 @@
 	</script>
   </head>
 
-  <body >
-    <section class="container" >
-		<div class="panel">
+  <body ng-app="Blog">
+    <section class="container" ng-controller="BlogController as blogCtrl">
+		<div class="panel" ng-repeat="post in blogCtrl.posts">
 
-				<h3>*post title here*</h3>
-				<img class="img-rounded" height="75" width="75"/> <!--set the image to the author oimage -->
-				<em>By *post author here* on *post date here*</em>
+				<h3>{{post.title}}</h3>
+				<img class="img-rounded" height="75" width="75" ng-src="{{post.authorImage}}"/> <!--set the image to the author oimage -->
+				<em>By {{post.author}} on {{post.createdOn | date}}</em>
 				<div ng-bind-html="post.body"></div>
 				
 				<h4>Comments</h4>
