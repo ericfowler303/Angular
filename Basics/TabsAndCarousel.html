@@ -11,11 +11,11 @@
 	  app.controller('TabController', function(){
 		this.tab = 1;
 		 this.setTab = function(newValue){
-		  this.tab = newValue;
+		  //set the tab value to the newValue
 		};
 
 		this.isSet = function(tabName){
-		  return this.tab === tabName;
+		  //return if the tab parameter matches the current tab. 
 		};
 	  });
 	  
@@ -23,7 +23,7 @@
 			this.current = 0;
 			this.getNext = function() { };
 			this.getPrev = function() { };
-			this.images = {};
+			this.images = imageArray;
 		});
 		
 		var imageArray = [
