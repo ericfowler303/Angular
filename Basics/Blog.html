@@ -17,7 +17,14 @@
 		});
 		
 		app.controller('CommentController', function() {
-			//TODO, fill in the comment controller
+			this.comment = {};
+			
+			this.addComment = function(post) {
+				// Set createdOn
+				this.comment.createdOn = Date.now();
+				post.comments.push(this.comment);
+				this.comment = {};
+			}
 		});
 		
 		var posts = [
@@ -81,37 +88,37 @@
 				
 				<h4>Comments</h4>
 					<ul>
-					  <li class="list-unstyled">
+					  <li class="list-unstyled" ng-repeat="comment in post.comments">
 						<blockquote>
-						  <strong><comment title here></strong><br/>
-						  "*comment body here*"
-						  <cite class="clearfix">--*comment author here* on *comment date here*</cite>
+						  <strong>{{comment.title}}</strong><br/>
+						  "{{comment.body}}"
+						  <cite class="clearfix">--{{comment.author}} on {{comment.createdOn | date}}</cite>
 						</blockquote>
 					  </li>
 					</ul>
 			
 		
-				<div >
-					<form class="form-horizontal" name="CommentForm" >
+				<div ng-controller="CommentController as commentCtrl">
+					<form class="form-horizontal" name="CommentForm" novalidate ng-submit="commentCtrl.addComment(post)">
 					
 						<h6>Add a comment</h6>
 						<!-- live preview -->
 						
 						 <blockquote >
-							<strong>*current comment title here* </strong><br/>
-							"*current comment body here*"
-							<cite class="clearfix">--*comment author here*</cite>
+							<strong>{{commentCtrl.comment.title}} </strong><br/>
+							"{{commentCtrl.comment.body}}"
+							<cite class="clearfix">--{{commentCtrl.comment.author}}</cite>
 						  </blockquote>
 						  
 						  
 						  <fieldset class="form-group">
-							<input  type="email" class="form-control" placeholder="yourEmail@someplace.com" title="Author"  />
+							<input  type="email" class="form-control" placeholder="yourEmail@someplace.com" title="Author"  ng-model="commentCtrl.comment.author"/>
 						  </fieldset>
 						  <fieldset class="form-group">
-							<input  class="form-control" placeholder="Title" title="Title"  />
+							<input  class="form-control" placeholder="Title" title="Title"  ng-model="commentCtrl.comment.title"/>
 						  </fieldset>
 						  <fieldset class="form-group">
-							<textarea class="form-control" placeholder="What do you want to say...?" title="Body" ></textarea>
+							<textarea class="form-control" placeholder="What do you want to say...?" title="Body" ng-model="commentCtrl.comment.body"></textarea>
 						  </fieldset>
 						  
 						  <fieldset class="form-group">
